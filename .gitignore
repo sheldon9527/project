@@ -9,7 +9,6 @@
 tmp/
 config/local
 config/test
-/vendor
 /node_modules
 /doc
 .env
