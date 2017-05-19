@@ -12,7 +12,7 @@ class AdminsTableSeeder extends Seeder
     {
         $data = [
             [
-                'username' => 'defara',
+                'username' => 'admon',
                 'email' => 'defara@qq.com',
                 'first_name' => 'yi',
                 'last_name' => 'sheldon',
