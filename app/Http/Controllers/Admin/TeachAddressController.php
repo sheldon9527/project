@@ -274,4 +274,27 @@ class TeachAddressController extends BaseController
 
         return view('admin.addresses.approvalIndex', compact('addresses', 'searchColumns'));
     }
+    /**
+     * [statusUpdate 修改状态]
+     * @param  [type] $id [description]
+     * @return [type]     [description]
+     */
+    public function statusUpdate($id)
+    {
+        $status = $this->request->get('status');
+        if (!$status) {
+            abort(404);
+        }
+        if (!in_array($status, ['NO_APPROVAL','APPROVALED','ACTIVE','INACTIVE'])) {
+            abort(404);
+        }
+        $address = TeachAddress::withTrashed()->find($id);
+        if (!$address) {
+            abort(404);
+        }
+        $address->status = $status;
+        $address->save();
+
+        return redirect(\URL::previous());
+    }
 }

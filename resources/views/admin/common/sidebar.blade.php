@@ -24,7 +24,7 @@
 						<i class="fa fa-angle-left pull-right"></i>
 					</a>
 					<ul class="treeview-menu menu-open">
-						<li class="{{\Route::is('admin.teach.addresses.index','admin.teach.addresses.show') ? 'active' : '' }}">
+						<li class="{{\Route::is('admin.teach.addresses.index','admin.teach.addresses.show','admin.teach.addresses.edit') ? 'active' : '' }}">
 							<a href="{{route('admin.teach.addresses.index')}}"><i class="fa fa-circle-o"></i> 目的地列表</a>
 						</li>
 						<li class="{{\Route::is('admin.teach.addresses.approval.*') ? 'active' : '' }}">

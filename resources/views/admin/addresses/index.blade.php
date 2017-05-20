@@ -80,10 +80,10 @@
                                                 </div>
                                                 <div style="margin-top:10px;">
                                                     @if($address->status == 'ACTIVE')
-                                                        <a class="badge bg-aqua" id='link'>下线</a>
+                                                        <a href="{{route('admin.teach.addresses.status.update',$address->id)}}?status=INACTIVE"  class="badge bg-aqua">下线</a>
                                                     @endif
                                                     @if(in_array($address->status,['INACTIVE','APPROVALED']))
-                                                        <a class="badge bg-aqua" id='link'>上线</a>
+                                                        <a href="{{route('admin.teach.addresses.status.update',$address->id)}}?status=ACTIVE" class="badge bg-aqua">上线</a>
                                                     @endif
                                                     @if($address->status == 'NO_APPROVAL')
                                                         <span class="badge">上线</span>

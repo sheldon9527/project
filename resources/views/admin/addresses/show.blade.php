@@ -54,10 +54,17 @@
                                 <a href="{{route('admin.teach.addresses.edit',[$address->id])}}">
                                     <button class="btn btn-info" style="margin-right:60px;" type="submit">编辑</button>
                                 </a>
-                                <a href="">
+								@if($address->status == 'ACTIVE')
+                                <a href="{{route('admin.teach.addresses.status.update',$address->id)}}?status=INACTIVE" >
                                     <button class="btn btn-info"  style="margin-right:60px;" type="submit">下线</button>
                                 </a>
-                                <a href="">
+								@endif
+							    @if(in_array($address->status,['INACTIVE','APPROVALED']))
+								<a href="{{route('admin.teach.addresses.status.update',$address->id)}}?status=ACTIVE" >
+									<button class="btn btn-info"  style="margin-right:60px;" type="submit">上线</button>
+								</a>
+								@endif
+                                <a href="{{route('admin.teach.addresses.destory',$address->id)}}" data-method='delete' data-confirm="你确定要删除吗？">
                                     <button class="btn btn-info"  style="margin-right:60px;" type="submit">删除</button>
                                 </a>
                             </td>

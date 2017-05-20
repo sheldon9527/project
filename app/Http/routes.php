@@ -398,6 +398,10 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'manager'], function () {
               'as' => 'admin.teach.addresses.approval.index',
               'uses' => 'TeachAddressController@approvalIndex',
           ]);
+          Route::get('teach/addresses/{id}/status', [
+              'as' => 'admin.teach.addresses.status.update',
+              'uses' => 'TeachAddressController@statusUpdate',
+          ]);
 
         /**
          * admins
