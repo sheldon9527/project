@@ -25,18 +25,18 @@
                             <div class="col-sm-3">
                                 <select name="category_id" id="category_id" class="form-control">
                                     @foreach($categories as $category)
-                                        <option value="{{$category['id']}}">{{$category['name']}}</option>
+                                        <option value="{{$category->id}}">{{$category->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
                         <div class="form-group"><label class="col-sm-2 control-label"><span class="text-red">*</span>输入目的地地址:</label>
-                            <div class="col-sm-3"><input type="text" name="telephone" value="{{old('telephone')}}" class="form-control" required>
+                            <div class="col-sm-3"><input type="text" name="address" value="{{old('address')}}" class="form-control" required>
                             </div>
                         </div>
                         <div class="form-group"><label class="col-sm-2 control-label"><span class="text-red">*</span>输入目的地电话:</label>
                             <div class="col-sm-3">
-                                <input type="text" name="address" value="{{old('address')}}" class="form-control" required>
+                                <input type="text" name="telephone" value="{{old('telephone')}}" class="form-control" required>
                             </div>
                         </div>
                         <div class="form-group">

@@ -2,7 +2,7 @@
 @section('content')
     <div class="box">
         <div class="box-header">
-            <h3 class="box-title">目的地列表</h3>
+            <h3 class="box-title">目的地回收站</h3>
         </div>
         <div class="box-body">
             <div class="row">
@@ -14,14 +14,14 @@
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input name="" type="checkbox" value="" style="margin-top:20px;">
                                 </th>
                                 <th class="sorting" tabindex="0"  rowspan="1" colspan="1">
-                                    <form class="form-inline" action="{{route('admin.teach.addresses.index')}}" method="get">
+                                    <form class="form-inline" action="{{route('admin.teach.addresses.recycle.index')}}" method="get">
                                       <div class="box-body">
                                           <div class="form-group">
-                                             <a class="btn btn-info" id='link'>删除选中</a>
+                                             <a class="btn btn-info" id='delete'>彻底删除选中</a>
                                           </div>&nbsp;&nbsp;
                                           <div class="form-group">
-                                               <a href="{{route('admin.teach.addresses.create')}}" class="btn btn-info">增加目的地</a>
-                                            </div>&nbsp;&nbsp;
+                                             <a class="btn btn-info" id='recycle'>恢复选中</a>
+                                          </div>&nbsp;&nbsp;
                                           <div class="form-group">
                                               <input type="text" class="form-control" name="name" placeholder="搜索" value="{{$searchColumns['name']}}">
                                           </div>&nbsp;&nbsp;
@@ -78,7 +78,7 @@
                                                         <span class="badge bg-yellow">状态:未审批</span>
                                                     @endif
                                                 </div>
-                                                <div style="margin-top:10px;">
+                                                <div style="margin-top:20px;">
                                                     @if($address->status == 'ACTIVE')
                                                         <a class="badge bg-aqua" id='link'>下线</a>
                                                     @endif
@@ -90,11 +90,8 @@
                                                     @endif
 
                                                  </div>
-                                                 <div style="margin-top:10px;">
+                                                 <div style="margin-top:20px;">
                                                     <a href="{{route('admin.teach.addresses.show',$address->id)}}" class="badge bg-aqua" id='link'>详情</a>
-                                                 </div>
-                                                 <div style="margin-top:10px;">
-                                                    <a href="{{route('admin.teach.addresses.destory',$address->id)}}" data-method='delete' data-confirm="你确定要删除吗？"  class="badge bg-aqua" id='link'>删除</a>
                                                  </div>
                                             </div>
                                         </div>
@@ -121,7 +118,7 @@
     <script src="/js/checkbox.js" type="text/javascript"></script>
     <script type="text/javascript">
     require(['jquery'], function($) {
-    $("#link").on('click',function(){
+    $("#delete").on('click',function(){
         ids = getCheckboxValue();
         if (ids == "") {
             alert("请先选择一条数据！");
@@ -133,7 +130,25 @@
                 },
                 {
                     'name':'type',
-                    'value':'delete',
+                    'value':'complete',
+                },
+            ];
+            buildForm('get','<?php echo route('admin.teach.addresses.multiDestory') ?>',data);
+        }
+    });
+    $("#recycle").on('click',function(){
+        ids = getCheckboxValue();
+        if (ids == "") {
+            alert("请先选择一条数据！");
+        }else{
+            data = [
+                {
+                    'name':'teachAddressIds',
+                    'value':ids,
+                },
+                {
+                    'name':'type',
+                    'value':'recycle',
                 },
             ];
             buildForm('get','<?php echo route('admin.teach.addresses.multiDestory') ?>',data);

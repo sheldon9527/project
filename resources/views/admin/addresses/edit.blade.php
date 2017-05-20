@@ -233,9 +233,9 @@ require(['jquery'], function($) {
  });
  //设置经纬度
 function setMapValue(){
-	if($("#map_txt").val()==""){ alert('你还没选择相应的坐标点^_^哦'); return false; }
-	$("#map").val($("#map_txt").val());
-	$('#myModal').modal('hide')
+  if($("#map_txt").val()==""){ alert('你还没选择相应的坐标点^_^哦'); return false; }
+  $("#map").val($("#map_txt").val());
+  $('#myModal').modal('hide')
 }
  </script>
 @endsection

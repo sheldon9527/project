@@ -376,6 +376,28 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'manager'], function () {
              'as' => 'admin.teach.addresses.update',
              'uses' => 'TeachAddressController@update',
          ]);
+         Route::get('teach/addresses/multiDestory', [
+             'as' => 'admin.teach.addresses.multiDestory',
+             'uses' => 'TeachAddressController@multiDestory',
+         ]);
+         Route::get('teach/addresses/multiUpdate', [
+             'as' => 'admin.teach.addresses.multiUpdate',
+             'uses' => 'TeachAddressController@multiUpdate',
+         ]);
+         /**
+          * 目的地的回收
+          */
+          Route::get('teach/addresses/recycle', [
+              'as' => 'admin.teach.addresses.recycle.index',
+              'uses' => 'TeachAddressController@recycleIndex',
+          ]);
+          /**
+           * 目的地审批
+           */
+          Route::get('teach/addresses/approval', [
+              'as' => 'admin.teach.addresses.approval.index',
+              'uses' => 'TeachAddressController@approvalIndex',
+          ]);
 
         /**
          * admins

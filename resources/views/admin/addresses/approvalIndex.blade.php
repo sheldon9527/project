@@ -2,7 +2,7 @@
 @section('content')
     <div class="box">
         <div class="box-header">
-            <h3 class="box-title">目的地列表</h3>
+            <h3 class="box-title">目的地审批</h3>
         </div>
         <div class="box-body">
             <div class="row">
@@ -14,24 +14,16 @@
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input name="" type="checkbox" value="" style="margin-top:20px;">
                                 </th>
                                 <th class="sorting" tabindex="0"  rowspan="1" colspan="1">
-                                    <form class="form-inline" action="{{route('admin.teach.addresses.index')}}" method="get">
+                                    <form class="form-inline" action="{{route('admin.teach.addresses.approval.index')}}" method="get">
                                       <div class="box-body">
+                                          <div class="form-group">
+                                             <a class="btn btn-info" id='approval'>审批选中</a>
+                                          </div>&nbsp;&nbsp;
                                           <div class="form-group">
                                              <a class="btn btn-info" id='link'>删除选中</a>
                                           </div>&nbsp;&nbsp;
                                           <div class="form-group">
-                                               <a href="{{route('admin.teach.addresses.create')}}" class="btn btn-info">增加目的地</a>
-                                            </div>&nbsp;&nbsp;
-                                          <div class="form-group">
                                               <input type="text" class="form-control" name="name" placeholder="搜索" value="{{$searchColumns['name']}}">
-                                          </div>&nbsp;&nbsp;
-                                          <div class="form-group">
-                                              <select name="status" id="status" class="form-control">
-                                                  <option value="">全部</option>
-                                                  <option value="NO_APPROVAL" @if($searchColumns['status'] =='NO_APPROVAL') selected = "selected" @endif>待审批</option>
-                                                  <option value="INACTIVE" @if($searchColumns['status'] =='INACTIVE') selected = "selected" @endif>未上架</option>
-                                                   <option value="ACTIVE" @if($searchColumns['status'] =='ACTIVE') selected = "selected" @endif>已上架</option>
-                                              </select>
                                           </div>&nbsp;&nbsp;
                                           <button class="btn btn-info"><i class="fa fa-search"></i></button>
                                       </div>
@@ -133,10 +125,28 @@
                 },
                 {
                     'name':'type',
-                    'value':'delete',
+                    'value':'approval',
                 },
             ];
             buildForm('get','<?php echo route('admin.teach.addresses.multiDestory') ?>',data);
+        }
+    });
+    $("#approval").on('click',function(){
+        ids = getCheckboxValue();
+        if (ids == "") {
+            alert("请先选择一条数据！");
+        }else{
+            data = [
+                {
+                    'name':'teachAddressIds',
+                    'value':ids,
+                },
+                {
+                    'name':'type',
+                    'value':'approval',
+                },
+            ];
+            buildForm('get','<?php echo route('admin.teach.addresses.multiUpdate') ?>',data);
         }
     });
 });

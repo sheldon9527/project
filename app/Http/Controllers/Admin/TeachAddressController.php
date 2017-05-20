@@ -26,10 +26,18 @@ class TeachAddressController extends BaseController
             $addresses->where('type', $type);
         }
         if ($status = $this->request->get('status')) {
-            $addresses->where('status', $status);
+            if ($status == 'INACTIVE') {
+                $addresses->whereIn('status', ['INACTIVE', 'APPROVALED']);
+            } else {
+                $addresses->where('status', $status);
+            }
         }
-        $addresses = $addresses->orderBy('id', 'desc')->paginate();
-
+        $addresses     = $addresses->orderBy('id', 'desc')->paginate();
+        $searchColumns = [
+            'name'   => $name,
+            'type'   => $type,
+            'status' => $status,
+        ];
         return view('admin.addresses.index', compact('addresses', 'searchColumns'));
     }
     /**
@@ -54,7 +62,7 @@ class TeachAddressController extends BaseController
         $teachAddress->telephone   = $request->get('telephone');
         $teachAddress->address     = $request->get('address');
         $teachAddress->type        = 'IN';
-        $bool = $teachAddress->save();
+        $bool                      = $teachAddress->save();
         if ($bool) {
             return redirect(route('admin.teach.addresses.edit', $teachAddress->id));
         }
@@ -66,12 +74,10 @@ class TeachAddressController extends BaseController
      */
     public function show($id)
     {
-        $address = TeachAddress::find($id);
+        $address = TeachAddress::withTrashed()->find($id);
         if (!$address) {
             abort(404);
         }
-
-        // dd($address->tags);
 
         return view('admin.addresses.show', compact('address'));
     }
@@ -82,7 +88,7 @@ class TeachAddressController extends BaseController
      */
     public function destory($id)
     {
-        $address = TeachAddress::find($id);
+        $address = TeachAddress::withTrashed()->find($id);
         if (!$address) {
             abort(404);
         }
@@ -97,7 +103,7 @@ class TeachAddressController extends BaseController
      */
     public function edit($id)
     {
-        $address = TeachAddress::find($id);
+        $address = TeachAddress::withTrashed()->find($id);
         if (!$address) {
             abort(404);
         }
@@ -145,5 +151,127 @@ class TeachAddressController extends BaseController
         $address->save();
 
         return redirect(route('admin.teach.addresses.show', $id));
+    }
+    /**
+     * [multiDestory 批量删除]
+     * @return [type] [description]
+     */
+    public function multiDestory()
+    {
+        $teachAddressIds = $this->request->get('teachAddressIds');
+        $type            = $this->request->get('type');
+        if (!$teachAddressIds) {
+            abort(404);
+        }
+        $teachAddressIdsArray = explode(',', $teachAddressIds);
+        if (empty($teachAddressIdsArray)) {
+            abort(404);
+        }
+        $route = 'admin.teach.addresses.recycle.index';
+        foreach ($teachAddressIdsArray as $teachAddressId) {
+            $address = TeachAddress::withTrashed()->find($teachAddressId);
+            if (!$address) {
+                continue;
+            }
+            switch ($type) {
+                case 'delete':
+                    $address->delete();
+                    $route = 'admin.teach.addresses.index';
+                    break;
+                case 'approval':
+                    $address->delete();
+                    $route = 'admin.teach.addresses.approval.index';
+                    break;
+                case 'complete':
+                    $address->forceDelete();
+                    break;
+                case 'recycle':
+                    $address->restore();
+                    break;
+            }
+        }
+
+        return redirect(route($route));
+    }
+    /**
+     * [multiUpdate 批量审批]
+     * @return [type] [description]
+     */
+    public function multiUpdate()
+    {
+        $teachAddressIds = $this->request->get('teachAddressIds');
+        $type            = $this->request->get('type');
+        if (!$teachAddressIds) {
+            abort(404);
+        }
+        $teachAddressIdsArray = explode(',', $teachAddressIds);
+        if (empty($teachAddressIdsArray)) {
+            abort(404);
+        }
+        foreach ($teachAddressIdsArray as $teachAddressId) {
+            $address = TeachAddress::find($teachAddressId);
+            if (!$address) {
+                continue;
+            }
+            switch ($type) {
+                case 'approval':
+                    $address->status = 'APPROVALED';
+                    $address->save();
+                    $route = 'admin.teach.addresses.approval.index';
+                    break;
+            }
+        }
+
+        return redirect(route($route));
+    }
+    /**
+     * [recycleIndex 回收站目的地管理]
+     * @return [type] [description]
+     */
+    public function recycleIndex()
+    {
+        $addresses = TeachAddress::onlyTrashed();
+        if ($name = $this->request->get('name')) {
+            $addresses->where('name', 'like', '%' . $name . '%');
+        }
+        if ($type = $this->request->get('type')) {
+            $addresses->where('type', $type);
+        }
+        if ($status = $this->request->get('status')) {
+            if ($status == 'INACTIVE') {
+                $addresses->whereIn('status', ['INACTIVE', 'APPROVALED']);
+            } else {
+                $addresses->where('status', $status);
+            }
+        }
+        $addresses     = $addresses->orderBy('id', 'desc')->paginate();
+        $searchColumns = [
+            'name'   => $name,
+            'type'   => $type,
+            'status' => $status,
+        ];
+
+        return view('admin.addresses.recycleIndex', compact('addresses', 'searchColumns'));
+    }
+    /**
+     * [recycleIndex 目的地审批]
+     * @return [type] [description]
+     */
+    public function approvalIndex()
+    {
+        $addresses = TeachAddress::query();
+        if ($name = $this->request->get('name')) {
+            $addresses->where('name', 'like', '%' . $name . '%');
+        }
+        if ($type = $this->request->get('type')) {
+            $addresses->where('type', $type);
+        }
+        $addresses     = $addresses->where('status', 'NO_APPROVAL')->orderBy('id', 'desc')->paginate();
+        $searchColumns = [
+            'name' => $name,
+            'type' => $type,
+        ];
+
+        return view('admin.addresses.approvalIndex', compact('addresses', 'searchColumns'));
     }
 }

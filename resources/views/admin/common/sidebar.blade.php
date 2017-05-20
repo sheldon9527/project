@@ -25,16 +25,16 @@
 					</a>
 					<ul class="treeview-menu menu-open">
 						<li class="{{\Route::is('admin.teach.addresses.index','admin.teach.addresses.show') ? 'active' : '' }}">
-							<a href="{{route('admin.teach.addresses.index')}}"><i class="fa fa-circle-o"></i>目的地列表</a>
+							<a href="{{route('admin.teach.addresses.index')}}"><i class="fa fa-circle-o"></i> 目的地列表</a>
 						</li>
-						<li class="">
-							<a href=""><i class="fa fa-circle-o"></i> 目的地审批</a>
+						<li class="{{\Route::is('admin.teach.addresses.approval.*') ? 'active' : '' }}">
+							<a href="{{route('admin.teach.addresses.approval.index')}}"><i class="fa fa-circle-o"></i> 目的地审批</a>
 						</li>
 						<li class="{{\Route::is('admin.teach.addresses.create') ? 'active' : '' }}">
 							<a href="{{route('admin.teach.addresses.create')}}"><i class="fa fa-circle-o"></i> 新增目的地</a>
 						</li>
-						<li class="">
-							<a href=""><i class="fa fa-circle-o"></i> 目的地回收站</a>
+						<li class="{{\Route::is('admin.teach.addresses.recycle.*') ? 'active' : '' }}">
+							<a href="{{route('admin.teach.addresses.recycle.index')}}"><i class="fa fa-circle-o"></i> 目的地回收站</a>
 						</li>
 					</ul>
 				</li>
