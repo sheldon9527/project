@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Dingo\Api\Routing\Helpers;
-use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 abstract class BaseController extends Controller
@@ -20,5 +19,4 @@ abstract class BaseController extends Controller
 
         return $this->response->array($errors)->setStatusCode(400);
     }
-
 }

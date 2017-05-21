@@ -11,7 +11,19 @@ class Attachment extends BaseModel
 
     protected $guarded = ['id', 'user_id'];
 
-    protected $hidden = ['deleted_at', 'attachable_type', 'attachable_id'];
+    protected $hidden = [
+        'deleted_at',
+        'user_id',
+        'attachable_type',
+        'attachable_id',
+        'width',
+        'height',
+        'weight',
+        'created_at',
+        'updated_at',
+        'description',
+        'tag'
+    ];
 
     public function attachable()
     {

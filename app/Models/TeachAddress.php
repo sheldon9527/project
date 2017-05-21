@@ -11,14 +11,19 @@ class TeachAddress extends BaseModel
 
     protected $hidden = [
         'deleted_at',
+        'geohash',
+        'type'
     ];
 
     protected $fillable = [
         'category_id',
+        'name',
         'address',
         'telephone',
         'geohash',
         'description',
+        'latitude',
+        'longitude',
         'status',
         'special',
     ];
@@ -30,12 +35,13 @@ class TeachAddress extends BaseModel
         return $this->morphMany('App\Models\Attachment', 'attachable');
     }
 
-    public function getCoverPIctureAttribute()
+    public function getCoverPictureAttribute()
     {
         $attachment = $this->attachments->first();
         if ($attachment) {
-            return $attachment->relative_path;
+            return \Config::get('domains.domain').$attachment->relative_path;
         }
+
         return null;
     }
 
@@ -47,5 +53,22 @@ class TeachAddress extends BaseModel
     public function tags()
     {
         return $this->hasMany('App\Models\Tags');
+    }
+
+    /**
+     *  @desc 根据两点间的经纬度计算距离
+     *  @param float $latitude 纬度值
+     *  @param float $longitude 经度值
+     */
+    public static function getDistance($latitude1, $longitude1, $latitude2, $longitude2)
+    {
+        $earth_radius = 6371000; //approximate radius of earth in meters
+        $dLat         = deg2rad($latitude2 - $latitude1);
+        $dLon         = deg2rad($longitude2 - $longitude1);
+        $a            = sin($dLat / 2) * sin($dLat / 2) + cos(deg2rad($latitude1)) * cos(deg2rad($latitude2)) * sin($dLon / 2) * sin($dLon / 2);
+        $c            = 2 * asin(sqrt($a));
+        $d            = $earth_radius * $c;
+
+        return round($d); //四舍五入
     }
 }

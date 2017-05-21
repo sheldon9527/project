@@ -41,6 +41,8 @@ class Category extends Node
         'right',
         'left',
         'en_name',
+        'icon_url',
+        'parent_id'
     ];
 
     protected $langFields = [

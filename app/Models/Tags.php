@@ -10,5 +10,7 @@ class Tags extends BaseModel
 
     protected $hidden = [
         'deleted_at',
+        'created_at',
+        'updated_at'
     ];
 }

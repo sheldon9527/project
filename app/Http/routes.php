@@ -15,7 +15,7 @@ Route::pattern('oid', '[0-9]+');
 Route::pattern('alpha', '[A-Za-z]+');
 $api = app('api.router');
 
-$api->version('v2', ['namespace' => 'App\Http\Controllers\Api\V1'], function ($api) {
+$api->version('v1', ['namespace' => 'App\Http\Controllers\Api\V1'], function ($api) {
 
     // 测试用的路由，查看服务器相关配置是否正确
     if (env('APP_DEBUG')) {
@@ -43,75 +43,12 @@ $api->version('v2', ['namespace' => 'App\Http\Controllers\Api\V1'], function ($a
             return response()->json(\Artisan::output());
         });
     }
-    //app 用户临时信息
-    $api->post('users/contact/info', 'UserController@tempInfo');
-    // 搜索自动补全对应的名称
-    $api->get('search/autocomplete', 'SearchController@autocomplete');
-    $api->get('search', 'SearchController@search');
-
-    # auth
-    //登录
-    $api->post('auth/login', 'AuthController@login');
-    //注册
-    $api->post('auth/signup', 'AuthController@signup');
-    //发送验证码
-    $api->post('auth/verifyCode', 'AuthController@verifyCode');
-    //验证验证码
-    $api->post('auth/authentication/verifyCode', 'AuthController@validateVerifyCode');
-    //忘记密码，发送验证码
-    $api->post('auth/password/forget', 'AuthController@forgetPassword');
-    //忘记密码，重置密码
-    $api->post('auth/password/reset', 'AuthController@resetPassword');
-
-    // 第三方登录
-    $api->get('oauth/{provider}', 'OAuthController@redirectToProvider');
-    $api->get('oauth/{provider}/callback', 'OAuthController@handleProviderCallback');
-
-    $api->post('oauth/bindAccount', 'OAuthController@bindAccount');
-    $api->post('oauth/createAccount', 'OAuthController@createAccount');
-
-    //soaicls列表
-    $api->get('socials', 'SocialController@index');
-
-    # recommendations 推荐
-    //推荐列表
-    $api->get('recommendations/home', 'RecommendController@home');
-    $api->get('recommendations', 'RecommendController@index');
-
-    $api->get('home/designers/filter', 'HomeController@showFilterData');
-
-    //设计师
-    //设计师列表
-    $api->get('designers', 'DesignerController@index');
-    //设计师详情
-    $api->get('designers/{id}', 'DesignerController@show');
-    //某个人 work
-    $api->get('designers/{id}/works', 'WorkController@designerIndex');
-    //作品详细
-    $api->get('works/{id}', 'WorkController@show');
-    //某个人的服务
-    $api->get('designers/{id}/services', 'ServiceController@designerIndex');
-    //服务详细
-    $api->get('services/{id}', 'ServiceController@show');
-
-    //某个人的服务类别work
-    $api->get('designers/{id}/service/works', 'InquiryServiceController@designerIndex');
-
-    # factories 工厂
-    //工厂详情
-    $api->get('makers/{id}', 'MakerController@show');
-
-    $api->get('makers', 'MakerController@index');
-
-    // 分类列表
-    $api->get('categories', 'CategoryController@index');
-    //国家列表
-    $api->get('regions', 'RegionController@index');
-    $api->get('countries', 'RegionController@countryIndex');
-    $api->get('hot/countries', 'RegionController@hotCountryIndex');
-    //国家列表json格式
-    $api->get('json/countries', 'RegionController@JsonCountryIndex');
-    $api->get('formatRegion', 'RegionController@formatRegion');
+    /**
+     * 目的地地址
+     */
+    $api->get('teach/addresses', 'TeachAddressController@index');
+    $api->get('teach/addresses/{id}', 'TeachAddressController@show');
+    $api->post('teach/addresses', 'TeachAddressController@store');
 });
 
 /*
