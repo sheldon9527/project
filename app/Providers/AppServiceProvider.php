@@ -16,13 +16,6 @@ class AppServiceProvider extends ServiceProvider
         $language = strtolower(substr($language, 0, 2));
         //有fallback_locale 所以不用担心传入错误
         app()->setLocale($language);
-
-        //cow代理
-        if (config('proxy.enable')) {
-            foreach (config('proxy.items') as $item) {
-                putenv($item);
-            }
-        }
     }
 
     /**

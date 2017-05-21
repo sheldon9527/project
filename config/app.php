@@ -165,13 +165,10 @@ return [
         //oauth
         LucaDegasperi\OAuth2Server\Storage\FluentStorageServiceProvider::class,
         LucaDegasperi\OAuth2Server\OAuth2ServerServiceProvider::class,
-
         // 运营端后台
         App\Providers\AdminServiceProvider::class,
         // laravel omnipay
         Ignited\LaravelOmnipay\LaravelOmnipayServiceProvider::class,
-        // view composer
-        App\Providers\ComposerServiceProvider::class,
         // authorize
         App\Providers\AuthServiceProvider::class,
     ],

@@ -2,14 +2,12 @@
 
 namespace App\Models;
 
-use App\Traits\CloudUrl;
-use App\Traits\ConvertLang;
 use Baum\Node;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Category extends Node
 {
-    use SoftDeletes, ConvertLang, CloudUrl;
+    use SoftDeletes;
 
     // 'parent_id' column name
     protected $parentColumn = 'parent_id';

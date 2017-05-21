@@ -2,12 +2,10 @@
 
 namespace App\Models;
 
-use App\Traits\CloudUrl;
 use Illuminate\Database\Eloquent\Model;
 
 class BaseModel extends Model
 {
-    use CloudUrl;
 
     protected $hidden = ['deleted_at'];
 

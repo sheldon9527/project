@@ -13,13 +13,6 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        // oauth登录需要的事件
-        'SocialiteProviders\Manager\SocialiteWasCalled' => [
-            'SocialiteProviders\QQ\QqExtendSocialite@handle',
-            'SocialiteProviders\WeixinWeb\WeixinWebExtendSocialite@handle',
-            'SocialiteProviders\Weibo\WeiboExtendSocialite@handle',
-            'SocialiteProviders\Weixin\WeixinExtendSocialite@handle',
-        ],
         // 跨域添加默认的返回头
         'Dingo\Api\Event\ResponseWasMorphed'            => [
             'App\Listeners\AddBaseHeaderToResponse',
