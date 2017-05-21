@@ -39,7 +39,7 @@
                                         <div class="row">
                                             <div class="col-xs-6 col-md-2">
                                                 @if($address->cover_picture)
-                                                    <img src="/{{$address->cover_picture}}" width="120px;" height="120px;">
+                                                    <img src="{{$address->cover_picture}}" width="120px;" height="120px;">
                                                 @else
                                                 <img src="/images/default.jpg" width="120px;" height="120px;">
                                                 @endif

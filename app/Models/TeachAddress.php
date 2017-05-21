@@ -39,7 +39,7 @@ class TeachAddress extends BaseModel
     {
         $attachment = $this->attachments->first();
         if ($attachment) {
-            return $attachment->relative_path;
+            return \Config::get('domains.domain').$attachment->relative_path;
         }
 
         return null;
