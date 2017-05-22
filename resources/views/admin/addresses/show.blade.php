@@ -34,6 +34,9 @@
                         <tr>
                             <td style="font-size:16px;"><strong>目的地地址:</strong>{{$address->address}}</td>
                         </tr>
+						<tr>
+							<td style="font-size:16px;"><strong>联系方式:</strong>{{$address->telephone}}</td>
+						</tr>
                         <tr>
                             <td style="font-size:16px;font-family:verdana;line-height:30px;"><strong>目的地介绍:</strong></br>
                             {{$address->description}}</td>
