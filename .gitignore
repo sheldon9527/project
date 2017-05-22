@@ -15,7 +15,7 @@ public/admin.php
 public/vendor/*
 public/admin.php
 public/sql/*
-/vendor
+/vendor/*
 /node_modules
 .env
 *.swp

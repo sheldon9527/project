@@ -25,27 +25,6 @@ class Handler extends ExceptionHandler
      */
     public function report(Exception $e)
     {
-        if (env('ERROR_NOTIFY')) {
-            $data = [
-                'file' => $e->getFile(),
-                'line' => $e->getLine(),
-                'error_message' => $e,
-            ];
-
-            $key = 'error_notify_'.md5($e->getMessage());
-
-            if (!\Cache::has($key)) {
-                \Cache::put($key, 1, 10);
-
-                \Mail::send('email.system-error', $data, function ($message) {
-                    $notifyUsers = config('error.email_notify_users');
-                    foreach ($notifyUsers as $user) {
-                        $message->to($user)->subject('服务器报错通知');
-                    }
-                });
-            }
-        }
-
         return parent::report($e);
     }
 
