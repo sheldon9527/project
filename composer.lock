@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "460ef2d0a81bdbefcc2a788c3b0635e4",
-    "content-hash": "6c02bbff6440b4849cd6120c4caeb3d3",
+    "hash": "2a6cec97c11194117a32cdcbadf53937",
+    "content-hash": "a5c9fbc61cbf1cff9217f6a0c556507c",
     "packages": [
         {
             "name": "abraham/twitteroauth",
@@ -998,7 +998,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/guzzle/guzzle3/0645b70d953bc1c067bbc8d5bc53194706b628d9.zip",
+                "url": "https://api.github.com/repos/guzzle/guzzle3/zipball/0645b70d953bc1c067bbc8d5bc53194706b628d9",
                 "reference": "0645b70d953bc1c067bbc8d5bc53194706b628d9",
                 "shasum": ""
             },
@@ -3456,7 +3456,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/SocialiteProviders/Manager/1a26f0d4673bee98accd8dd1e48c62ccc2495119.zip",
+                "url": "https://api.github.com/repos/SocialiteProviders/Manager/zipball/1a26f0d4673bee98accd8dd1e48c62ccc2495119",
                 "reference": "1a26f0d4673bee98accd8dd1e48c62ccc2495119",
                 "shasum": ""
             },
@@ -3572,7 +3572,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/SocialiteProviders/Weixin/8ac480f9c88522bd4d110dedb5deb1982e7d3aae.zip",
+                "url": "https://api.github.com/repos/SocialiteProviders/Weixin/zipball/8ac480f9c88522bd4d110dedb5deb1982e7d3aae",
                 "reference": "8ac480f9c88522bd4d110dedb5deb1982e7d3aae",
                 "shasum": ""
             },
@@ -4878,6 +4878,52 @@
                 "validate"
             ],
             "time": "2016-11-23 20:04:58"
+        },
+        {
+            "name": "workerman/workerman",
+            "version": "v3.4.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/walkor/Workerman.git",
+                "reference": "a10f58e546af755f3546a309afea7ac71f879aaf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://files.phpcomposer.com/files/walkor/Workerman/a10f58e546af755f3546a309afea7ac71f879aaf.zip",
+                "reference": "a10f58e546af755f3546a309afea7ac71f879aaf",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3"
+            },
+            "suggest": {
+                "ext-event": "For better performance."
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Workerman\\": "./"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "walkor",
+                    "email": "walkor@workerman.net",
+                    "homepage": "http://www.workerman.net",
+                    "role": "Developer"
+                }
+            ],
+            "description": "An asynchronous event driven PHP framework for easily building fast, scalable network applications.",
+            "homepage": "http://www.workerman.net",
+            "keywords": [
+                "asynchronous",
+                "event-loop"
+            ],
+            "time": "2017-05-04 15:08:38"
         }
     ],
     "packages-dev": [

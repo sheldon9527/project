@@ -19,6 +19,8 @@ public/sql/*
 /node_modules
 .env
 *.swp
+.tags
+.tags1
 .swo
 public/images/*-*/
 public/css/imgs/*-*/

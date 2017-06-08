@@ -34,7 +34,8 @@
     "socialiteproviders/weixin": "^2.1",
     "socialiteproviders/manager": "2.1.2",
     "tecnickcom/tcpdf": "^6.2",
-    "geohash/geohash": "1.0"
+    "geohash/geohash": "1.0",
+    "workerman/workerman": "^3.4"
   },
   "require-dev": {
     "fzaninotto/faker": "~1.4",
