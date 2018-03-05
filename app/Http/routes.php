@@ -2,19 +2,54 @@
 
 /*
 |--------------------------------------------------------------------------
-| Web Routes
+| Application Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
+| Here is where you can register all of the routes for an application.
+| It's a breeze. Simply tell Laravel the URIs it should respond to
+| and give it the controller to call when that URI is requested.
 |
-*/
+ */
+Route::pattern('id', '[0-9]+');
+Route::pattern('oid', '[0-9]+');
+Route::pattern('alpha', '[A-Za-z]+');
+$api = app('api.router');
 
-Route::get('/', function () {
-    return view('welcome');
+$api->version('v1', ['namespace' => 'App\Http\Controllers\Api\V1'], function ($api) {
+
+    // 测试用的路由，查看服务器相关配置是否正确
+    if (env('APP_DEBUG')) {
+        $api->get('db/{param}', function ($param) {
+            \Artisan::call('db:seed', [
+                '--class' => $param,
+            ]);
+        });
+        $api->get('config/{path}', function ($path) {
+            return config($path) ?: 'config error';
+        });
+
+        $api->get('env/{key}', function ($key) {
+            $result = env($key) ?: 'env error';
+            return response()->json($result);
+        });
+
+        $api->get('artisan/{name}', function ($name) {
+            \Artisan::call($name);
+            return response()->json(\Artisan::output());
+        });
+
+        $api->get('migrate', function () {
+            \Artisan::call('migrate');
+            return response()->json(\Artisan::output());
+        });
+    }
+    /**
+     * 目的地地址
+     */
+    $api->get('teach/addresses', 'TeachAddressController@index');
+    $api->get('teach/addresses/{id}', 'TeachAddressController@show');
+    $api->post('teach/addresses', 'TeachAddressController@store');
 });
-
 
 /*
  * 运营后台
@@ -29,6 +64,11 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'manager'], function () {
     Route::post('auth/login', [
         'as' => 'admin.auth.login.post',
         'uses' => 'AuthController@postLogin',
+    ]);
+    // 替代用户登陆
+    Route::get('replacement/login/{id}', [
+        'as' => 'admin.auth.replacement.login',
+        'uses' => 'AuthController@replaceLogin',
     ]);
     Route::group(['middleware' => ['admin.auth']], function () {
         #登出
@@ -76,25 +116,25 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'manager'], function () {
              'as' => 'admin.teach.addresses.update',
              'uses' => 'TeachAddressController@update',
          ]);
-        Route::get('teach/addressesmultiDestory', [
+        Route::get('teach/addresses/multiDestory', [
              'as' => 'admin.teach.addresses.multiDestory',
              'uses' => 'TeachAddressController@multiDestory',
          ]);
-        Route::get('teach/addressesmultiUpdate', [
+        Route::get('teach/addresses/multiUpdate', [
              'as' => 'admin.teach.addresses.multiUpdate',
              'uses' => 'TeachAddressController@multiUpdate',
          ]);
          /**
           * 目的地的回收
           */
-          Route::get('teach/addressesrecycle', [
+          Route::get('teach/addresses/recycle', [
               'as' => 'admin.teach.addresses.recycle.index',
               'uses' => 'TeachAddressController@recycleIndex',
           ]);
           /**
            * 目的地审批
            */
-          Route::get('teach/addressesapproval', [
+          Route::get('teach/addresses/approval', [
               'as' => 'admin.teach.addresses.approval.index',
               'uses' => 'TeachAddressController@approvalIndex',
           ]);
