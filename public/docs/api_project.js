@@ -1,0 +1,1 @@
+define({  "name": "sheldon",  "version": "0.2.0",  "description": "sheldon",  "title": "sheldon",  "url": "http://teach.dev/api",  "sampleUrl": false,  "apidoc": "0.2.0",  "generator": {    "name": "apidoc",    "time": "2017-05-21T08:18:46.455Z",    "url": "http://apidocjs.com",    "version": "0.16.1"  }});

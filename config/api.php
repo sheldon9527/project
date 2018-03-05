@@ -1,5 +1,8 @@
 <?php
+
+
 return [
+
     /*
     |--------------------------------------------------------------------------
     | Standards Tree
@@ -15,7 +18,9 @@ return [
     | https://tools.ietf.org/html/rfc6838
     |
     */
+
     'standardsTree' => env('API_STANDARDS_TREE', 'x'),
+
     /*
     |--------------------------------------------------------------------------
     | API Subtype
@@ -27,7 +32,9 @@ return [
     | For example: Accept: application/x.SUBTYPE.v1+json
     |
     */
+
     'subtype' => env('API_SUBTYPE', ''),
+
     /*
     |--------------------------------------------------------------------------
     | Default API Version
@@ -38,7 +45,9 @@ return [
     | when generating your APIs documentation.
     |
     */
+
     'version' => env('API_VERSION', 'v1'),
+
     /*
     |--------------------------------------------------------------------------
     | Default API Prefix
@@ -48,7 +57,9 @@ return [
     | specify it for each group.
     |
     */
+
     'prefix' => env('API_PREFIX', null),
+
     /*
     |--------------------------------------------------------------------------
     | Default API Domain
@@ -58,7 +69,9 @@ return [
     | specify it for each group.
     |
     */
+
     'domain' => env('API_DOMAIN', null),
+
     /*
     |--------------------------------------------------------------------------
     | Name
@@ -69,7 +82,9 @@ return [
     | one when using the command.
     |
     */
+
     'name' => env('API_NAME', null),
+
     /*
     |--------------------------------------------------------------------------
     | Conditional Requests
@@ -81,7 +96,9 @@ return [
     | on certain groups or routes.
     |
     */
+
     'conditionalRequest' => env('API_CONDITIONAL_REQUEST', true),
+
     /*
     |--------------------------------------------------------------------------
     | Strict Mode
@@ -92,7 +109,9 @@ return [
     | your API will not be browsable via a web browser.
     |
     */
+
     'strict' => env('API_STRICT', false),
+
     /*
     |--------------------------------------------------------------------------
     | Debug Mode
@@ -103,7 +122,9 @@ return [
     | more detailed information on the exception.
     |
     */
+
     'debug' => env('API_DEBUG', false),
+
     /*
     |--------------------------------------------------------------------------
     | Generic Error Format
@@ -115,13 +136,28 @@ return [
     | removed from the final response.
     |
     */
+
     'errorFormat' => [
         'message' => ':message',
         'errors' => ':errors',
         'code' => ':code',
-        'status' => ':status_code',
+        'status_code' => ':status_code',
         'debug' => ':debug',
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | API Middleware
+    |--------------------------------------------------------------------------
+    |
+    | Middleware that will be applied globally to all API requests.
+    |
+    */
+
+    'middleware' => [
+
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Authentication Providers
@@ -131,9 +167,11 @@ return [
     | authenticate an incoming API request.
     |
     */
+
     'auth' => [
-        'jwt' => 'Dingo\Api\Auth\Provider\JWT'
+        'jwt' => 'Dingo\Api\Auth\Provider\JWT',
     ],
+
     /*
     |--------------------------------------------------------------------------
     | Throttling / Rate Limiting
@@ -144,8 +182,11 @@ return [
     | throttles.
     |
     */
+
     'throttling' => [
+
     ],
+
     /*
     |--------------------------------------------------------------------------
     | Response Transformer
@@ -157,7 +198,9 @@ return [
     | this with your own transformer.
     |
     */
+
     'transformer' => env('API_TRANSFORMER', Dingo\Api\Transformer\Adapter\Fractal::class),
+
     /*
     |--------------------------------------------------------------------------
     | Response Formats
@@ -165,11 +208,26 @@ return [
     |
     | Responses can be returned in multiple formats by registering different
     | response formatters. You can also customize an existing response
-    | formatter.
+    | formatter with a number of options to configure its output.
     |
     */
+
     'defaultFormat' => env('API_DEFAULT_FORMAT', 'json'),
+
     'formats' => [
+
         'json' => Dingo\Api\Http\Response\Format\Json::class,
+
     ],
+
+    'formatsOptions' => [
+
+        'json' => [
+            'pretty_print' => env('API_JSON_FORMAT_PRETTY_PRINT_ENABLED', false),
+            'indent_style' => env('API_JSON_FORMAT_INDENT_STYLE', 'space'),
+            'indent_size' => env('API_JSON_FORMAT_INDENT_SIZE', 2),
+        ],
+
+    ],
+
 ];

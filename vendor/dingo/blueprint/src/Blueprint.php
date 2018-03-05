@@ -71,16 +71,17 @@ class Blueprint
     }
 
     /**
-     * Generate documentation with the name and version.
+     * Generate documentation with the name, version and optional overview content.
      *
      * @param \Illuminate\Support\Collection $controllers
      * @param string                         $name
      * @param string                         $version
      * @param string                         $includePath
+     * @param string                         $overviewFile
      *
      * @return bool
      */
-    public function generate(Collection $controllers, $name, $version, $includePath = null)
+    public function generate(Collection $controllers, $name, $version, $includePath = null, $overviewFile = null)
     {
         $this->includePath = $includePath;
 
@@ -108,10 +109,10 @@ class Blueprint
 
             $annotations = new Collection($this->reader->getClassAnnotations($controller));
 
-            return new Resource($controller->getName(), $controller, $annotations, $actions);
+            return new RestResource($controller->getName(), $controller, $annotations, $actions);
         });
 
-        $contents = $this->generateContentsFromResources($resources, $name);
+        $contents = $this->generateContentsFromResources($resources, $name, $overviewFile);
 
         $this->includePath = null;
 
@@ -123,10 +124,11 @@ class Blueprint
      *
      * @param \Illuminate\Support\Collection $resources
      * @param string                         $name
+     * @param string                         $overviewFile
      *
      * @return string
      */
-    protected function generateContentsFromResources(Collection $resources, $name)
+    protected function generateContentsFromResources(Collection $resources, $name, $overviewFile = null)
     {
         $contents = '';
 
@@ -134,6 +136,7 @@ class Blueprint
         $contents .= $this->line(2);
         $contents .= sprintf('# %s', $name);
         $contents .= $this->line(2);
+        $contents .= $this->getOverview($overviewFile);
 
         $resources->each(function ($resource) use (&$contents) {
             if ($resource->getActions()->isEmpty()) {
@@ -268,11 +271,11 @@ class Blueprint
      *
      * @param string                               $contents
      * @param \Dingo\Blueprint\Annotation\Response $response
-     * @param \Dingo\Blueprint\Resource            $resource
+     * @param \Dingo\Blueprint\RestResource            $resource
      *
      * @return void
      */
-    protected function appendResponse(&$contents, Annotation\Response $response, Resource $resource)
+    protected function appendResponse(&$contents, Annotation\Response $response, RestResource $resource)
     {
         $this->appendSection($contents, sprintf('Response %s', $response->statusCode));
 
@@ -298,11 +301,11 @@ class Blueprint
      *
      * @param string                              $contents
      * @param \Dingo\Blueprint\Annotation\Request $request
-     * @param \Dingo\Blueprint\Resource           $resource
+     * @param \Dingo\Blueprint\RestResource           $resource
      *
      * @return void
      */
-    protected function appendRequest(&$contents, $request, Resource $resource)
+    protected function appendRequest(&$contents, $request, RestResource $resource)
     {
         $this->appendSection($contents, 'Request');
 
@@ -453,5 +456,30 @@ class Blueprint
     protected function getFormat()
     {
         return 'FORMAT: 1A';
+    }
+
+    /**
+     * Get the overview file content to append.
+     *
+     * @param null $file
+     * @return null|string
+     */
+    protected function getOverview($file = null)
+    {
+        if (null !== $file) {
+            if (!file_exists($file)) {
+                throw new RuntimeException('Overview file could not be found.');
+            }
+
+            $content = file_get_contents($file);
+
+            if ($content === false) {
+                throw new RuntimeException('Failed to read overview file contents.');
+            }
+
+            return $content.$this->line(2);
+        }
+
+        return null;
     }
 }
